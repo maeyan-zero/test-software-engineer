@@ -1,5 +1,7 @@
 # Technical Test: Game Event Ingesting
+
 ## Overview
+
 Develop a self-contained system to ingest events from a hypothetical game.
 This test evaluates your ability to design, implement, and explain a multi-component system as a senior engineer end to end.
 
@@ -10,7 +12,8 @@ This test evaluates your ability to design, implement, and explain a multi-compo
 - **Keep It Minimal:** Use lightweight libraries and avoid adding unnecessary features, or over-engineering the solution.
 
 ## Requirements
-- API: 
+
+- API:
   - Create a REST-compliant API to ingest events.
   - Ensure the API is type-safe and validates input at runtime.
 - Queue:
@@ -28,16 +31,17 @@ This test evaluates your ability to design, implement, and explain a multi-compo
   - Document the commands to run the system.
 
 ## Questions
+
 - What did you use for the API and why?
 - What queue/worker system did you choose and why?
 - What database did you use and why?
 - What key decisions did you make about how the system is structured and why?
 
-
 > [!IMPORTANT]
 > Answer the above questions in this file
 
 ## Extra Credit
+
 - Implement a retry mechanism in the worker for failed jobs
 - Include a performance optimization (e.g. batch processing in the worker)
 - Create additional tests for edge cases
