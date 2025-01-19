@@ -14,6 +14,8 @@ export function createPushEventService(
 ): IPushEventService {
   return {
     async pushEvent(event: GameEvent): Promise<PushEventResult> {
+      console.log("Pushing event...", event);
+
       // handle business logic here
       // check player is allowed to join a game (ie not full, not banned etc.)
       await publisher.publish("lobby", event);
