@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "tsx src/api",
+    "api": "tsx src/api",
+    "runner": "tsx src/runner",
     "lint": "eslint --fix",
     "format": "prettier --write --ignore-unknown",
     "test": "jest",

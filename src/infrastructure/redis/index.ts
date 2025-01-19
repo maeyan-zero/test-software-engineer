@@ -1,5 +1,5 @@
 import { createClient, RedisClientType } from "redis";
-import { IPublisher } from "@/domain/pubsub";
+import { GameEventHandler, IPublisher, ISubscriber } from "@/domain/pubsub";
 import { GameEvent } from "@/domain/events";
 import process from "process";
 
@@ -19,6 +19,30 @@ export function createPublisher(client: RedisClientType): IPublisher {
 
       console.info("Redis message published.", {
         response: resp,
+      });
+    },
+  };
+}
+
+export function createSubscriber(client: RedisClientType): ISubscriber {
+  return {
+    async subscribe(
+      channelId: string,
+      handler: GameEventHandler,
+    ): Promise<void> {
+      // noinspection TypeScriptValidateTypes
+      await client.subscribe<GameEvent>(channelId, (message: string) => {
+        console.info("Redis message received.", {
+          message,
+        });
+
+        try {
+          const event = JSON.parse(message);
+          handler(event);
+        } catch (err) {
+          // handle parsing errors, processing errors etc
+          console.log("Error processing event.", err);
+        }
       });
     },
   };
