@@ -1,3 +1,5 @@
+import "dotenv/config"; // adds .env support
+
 import { createRedisClient, createSubscriber } from "@/infrastructure/redis";
 import { createEventProcessingService } from "@/domain/events/service";
 import {

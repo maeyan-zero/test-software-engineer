@@ -1,3 +1,5 @@
+import "dotenv/config"; // adds .env support
+
 import { createApp } from "@/api/app";
 import * as process from "process";
 import { createPublisher, createRedisClient } from "@/infrastructure/redis";
