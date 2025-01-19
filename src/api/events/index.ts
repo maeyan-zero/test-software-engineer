@@ -1,8 +1,8 @@
 import express from "express";
 import { validate } from "@/api/middleware";
 import { eventSchema } from "@/domain/events";
-import { IPushEventService } from "@/domain/events/service";
 import { StatusCodes } from "http-status-codes";
+import { IPushEventService } from "@/domain/events/types";
 
 export function createEventRouter(service: IPushEventService) {
   const router = express.Router();

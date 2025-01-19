@@ -1,7 +1,8 @@
 import express from "express";
 import { createEventRouter } from "@/api/events";
 import bodyParser from "body-parser";
-import { IPushEventService } from "@/domain/events/service";
+
+import { IPushEventService } from "@/domain/events/types";
 
 export function createApp(eventService: IPushEventService) {
   const app = express();

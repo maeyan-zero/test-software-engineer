@@ -1,4 +1,19 @@
 import { eventSchema } from "@/domain/events/schema";
-import { GameEvent } from "@/domain/events/types";
+import {
+  GameEvent,
+  EventResult,
+  EventType,
+  IEventProcessingService,
+  IPushEventService,
+  PushEventResult,
+} from "@/domain/events/types";
 
-export { eventSchema, GameEvent };
+export {
+  eventSchema,
+  GameEvent,
+  EventResult,
+  EventType,
+  IEventProcessingService,
+  IPushEventService,
+  PushEventResult,
+};

@@ -1,18 +1,13 @@
-import { GameEvent } from "@/domain/events";
+import {
+  GameEvent,
+  EventResult,
+  EventType,
+  IEventProcessingService,
+  IPushEventService,
+  PushEventResult,
+} from "@/domain/events";
 import { IPublisher } from "@/domain/pubsub";
-import { EventType } from "@/domain/events/types";
-
-export type PushEventResult = {
-  scheduled: number;
-};
-
-export interface IPushEventService {
-  pushEvent(event: GameEvent): Promise<PushEventResult>;
-}
-
-export interface IEventProcessingService {
-  handleEvent(event: GameEvent): Promise<void>;
-}
+import { IResultRepository } from "@/domain/rdms";
 
 export function createPushEventService(
   publisher: IPublisher,
@@ -32,9 +27,11 @@ export function createPushEventService(
   };
 }
 
-export function createEventProcessingService(): IEventProcessingService {
+export function createEventProcessingService(
+  repository: IResultRepository,
+): IEventProcessingService {
   return {
-    async handleEvent(event: GameEvent): Promise<void> {
+    async handleEvent(event: GameEvent): Promise<EventResult> {
       switch (event.eventType) {
         case EventType.JOIN_GAME:
           console.info("Player joined game.");
@@ -42,6 +39,22 @@ export function createEventProcessingService(): IEventProcessingService {
         case EventType.QUIT:
           console.info("Player quit.");
           break;
+      }
+
+      try {
+        return await repository.saveResult({
+          event,
+          success: true,
+        });
+      } catch (err) {
+        console.error("Error saving event result.", err);
+
+        // could add recovery logic here, retry etc
+
+        return {
+          event,
+          success: false,
+        };
       }
     },
   };

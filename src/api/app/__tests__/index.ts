@@ -1,12 +1,9 @@
 import { describe, expect, test } from "@jest/globals";
 import request from "supertest";
 import { createApp } from "../index";
-import { EventType, GameEvent } from "@/domain/events/types";
+import { EventType, GameEvent, IPushEventService } from "@/domain/events/types";
 import { IPublisher } from "@/domain/pubsub";
-import {
-  createPushEventService,
-  IPushEventService,
-} from "@/domain/events/service";
+import { createPushEventService } from "@/domain/events/service";
 
 describe("Tests REST API endpoints.", () => {
   test("/api/event processes valid events", () => {

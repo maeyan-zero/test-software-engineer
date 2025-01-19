@@ -1,0 +1,15 @@
+name: playa3ull
+
+services:
+  pg:
+    ports:
+      - "5432:5432"
+    environment:
+      # insecure credentials for demonstration purposes only
+      # these would usually be provided by a secure key store
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres
+
+  redis:
+    ports:
+      - "6379:6379"

@@ -22,3 +22,22 @@ export type LeaveGameEvent = BaseEvent & {
 };
 
 export type GameEvent = JoinGameEvent | LeaveGameEvent;
+
+export type PushEventResult = {
+  scheduled: number;
+};
+
+export type EventResult = {
+  id?: number;
+  createdAt?: Date;
+  event: GameEvent;
+  success: boolean;
+};
+
+export interface IPushEventService {
+  pushEvent(event: GameEvent): Promise<PushEventResult>;
+}
+
+export interface IEventProcessingService {
+  handleEvent(event: GameEvent): Promise<EventResult>;
+}

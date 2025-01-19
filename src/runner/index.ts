@@ -1,9 +1,19 @@
 import { createRedisClient, createSubscriber } from "@/infrastructure/redis";
 import { createEventProcessingService } from "@/domain/events/service";
+import {
+  createDb,
+  createPgDialect,
+  createResultRepository,
+} from "@/infrastructure/postgres";
 
 const redis = createRedisClient();
 const subscriber = createSubscriber(redis);
-const eventProcessor = createEventProcessingService();
+
+const pg = createPgDialect();
+const db = createDb(pg);
+const repo = createResultRepository(db);
+
+const eventProcessor = createEventProcessingService(repo);
 
 // channel id could come from cli or env when scaling
 redis.connect().then(() => {
