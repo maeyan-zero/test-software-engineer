@@ -1,11 +1,16 @@
 import { describe, expect, test } from "@jest/globals";
 import request from "supertest";
 import { createApp } from "../index";
-import { EventType } from "@/domain/events/types";
+import { EventType, GameEvent } from "@/domain/events/types";
+import { AbstractPublisher } from "@/domain/pubsub";
+import {
+  createPushEventService,
+  PushEventService,
+} from "@/domain/events/scheduler";
 
 describe("Tests REST API endpoints.", () => {
   test("/api/event processes valid events", () => {
-    return request(createApp())
+    return request(createTestApp())
       .post("/api/event")
       .send(createValidEvent())
       .then((response) => {
@@ -14,7 +19,7 @@ describe("Tests REST API endpoints.", () => {
   });
 
   test("/api/event validates missing game data", () => {
-    return request(createApp())
+    return request(createTestApp())
       .post("/api/event")
       .send(createInvalidEvent())
       .then((response) => {
@@ -31,6 +36,25 @@ describe("Tests REST API endpoints.", () => {
       });
   });
 });
+
+function createNoOpsPublisher(): AbstractPublisher {
+  return {
+    async publish(channelId: string, event: GameEvent): Promise<void> {
+      console.log("[Publisher] Publishing message to channel...", {
+        channelId,
+        event,
+      });
+    },
+  };
+}
+
+function createEventService(): PushEventService {
+  return createPushEventService(createNoOpsPublisher());
+}
+
+function createTestApp() {
+  return createApp(createEventService());
+}
 
 function createValidEvent() {
   const now = new Date();
