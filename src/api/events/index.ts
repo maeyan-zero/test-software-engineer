@@ -1,10 +1,10 @@
 import express from "express";
 import { validate } from "@/api/middleware";
 import { eventSchema } from "@/domain/events";
-import { PushEventService } from "@/domain/events/scheduler";
+import { IPushEventService } from "@/domain/events/service";
 import { StatusCodes } from "http-status-codes";
 
-export function createEventRouter(service: PushEventService) {
+export function createEventRouter(service: IPushEventService) {
   const router = express.Router();
   const eventValidator = validate(eventSchema);
 

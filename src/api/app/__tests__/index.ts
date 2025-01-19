@@ -2,11 +2,11 @@ import { describe, expect, test } from "@jest/globals";
 import request from "supertest";
 import { createApp } from "../index";
 import { EventType, GameEvent } from "@/domain/events/types";
-import { AbstractPublisher } from "@/domain/pubsub";
+import { IPublisher } from "@/domain/pubsub";
 import {
   createPushEventService,
-  PushEventService,
-} from "@/domain/events/scheduler";
+  IPushEventService,
+} from "@/domain/events/service";
 
 describe("Tests REST API endpoints.", () => {
   test("/api/event processes valid events", () => {
@@ -37,7 +37,7 @@ describe("Tests REST API endpoints.", () => {
   });
 });
 
-function createNoOpsPublisher(): AbstractPublisher {
+function createNoOpsPublisher(): IPublisher {
   return {
     async publish(channelId: string, event: GameEvent): Promise<void> {
       console.log("[Publisher] Publishing message to channel...", {
@@ -48,7 +48,7 @@ function createNoOpsPublisher(): AbstractPublisher {
   };
 }
 
-function createEventService(): PushEventService {
+function createEventService(): IPushEventService {
   return createPushEventService(createNoOpsPublisher());
 }
 

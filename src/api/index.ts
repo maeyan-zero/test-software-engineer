@@ -1,7 +1,7 @@
 import { createApp } from "@/api/app";
 import * as process from "process";
 import { createPublisher, createRedisClient } from "@/infrastructure/redis";
-import { createPushEventService } from "@/domain/events/scheduler";
+import { createPushEventService } from "@/domain/events/service";
 
 const redisClient = createRedisClient();
 const publisher = createPublisher(redisClient);

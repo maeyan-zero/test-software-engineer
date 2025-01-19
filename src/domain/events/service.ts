@@ -1,17 +1,17 @@
 import { GameEvent } from "@/domain/events";
-import { AbstractPublisher } from "@/domain/pubsub";
+import { IPublisher } from "@/domain/pubsub";
 
 export type PushEventResult = {
   scheduled: number;
 };
 
-export interface PushEventService {
+export interface IPushEventService {
   pushEvent(event: GameEvent): Promise<PushEventResult>;
 }
 
 export function createPushEventService(
-  publisher: AbstractPublisher,
-): PushEventService {
+  publisher: IPublisher,
+): IPushEventService {
   return {
     async pushEvent(event: GameEvent): Promise<PushEventResult> {
       // handle business logic here
