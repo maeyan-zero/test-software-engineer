@@ -6,6 +6,7 @@
     "start": "tsx src/api",
     "lint": "eslint --fix",
     "format": "prettier --write --ignore-unknown",
+    "test": "jest",
     "prepare": "husky"
   },
   "dependencies": {
