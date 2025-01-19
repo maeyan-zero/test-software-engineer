@@ -1,11 +1,11 @@
 import { describe, expect, test } from "@jest/globals";
 import request from "supertest";
-import app from "../index";
+import { createApp } from "../index";
 import { EventType } from "@/domain/events/types";
 
 describe("Tests REST API endpoints.", () => {
   test("/api/event processes valid events", () => {
-    return request(app)
+    return request(createApp())
       .post("/api/event")
       .send(createValidEvent())
       .then((response) => {
@@ -14,7 +14,7 @@ describe("Tests REST API endpoints.", () => {
   });
 
   test("/api/event validates missing game data", () => {
-    return request(app)
+    return request(createApp())
       .post("/api/event")
       .send(createInvalidEvent())
       .then((response) => {
